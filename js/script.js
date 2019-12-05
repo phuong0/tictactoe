@@ -1,10 +1,32 @@
+let currentPlayer = "X";
+let numsOfTurn = 0;
+let endGame = false;
 
+function checkGame() {
+    numsOfTurn++;
+    if (numsOfTurn === 9) {
+        endGame = true;
+        $('h1').html("It is a draw!!!!");
+        return "gameEnd";
+    }
+}
 
-
-
-
-
-
+function performLogic(buttonId, tileId){
+    let checking = checkGame();
+    if (checking === "gameEnd"){
+        //stops game
+    } else {
+        $(buttonId).click(function(){
+            $(buttonId).hide();
+            $(tileId).html(currentPlayer);
+            if (currentPlayer === "X") {
+                currentPlayer = "O";
+            } else {
+                currentPlayer = "X";
+            }
+        });
+    }
+}
 $("#button1").click(function() {
     performLogic("#button1","#tile1");
 });
