@@ -2,6 +2,42 @@ let currentPlayer = "X";
 let numsOfTurn = 0;
 let endGame = false;
 
+function win(tileId1, tileId2, tileId3){
+    console.log("running")
+    let firstTile = $("#tile" + tileId1).text();
+    console.log(firstTile)
+    let secondTile = $("#tile" + tileId2).text();
+    console.log(secondTile)
+    let thirdTile = $("#tile" + tileId3).text();
+    console.log(thirdTile)
+    if (firstTile === currentPlayer && secondTile === currentPlayer && thirdTile === currentPlayer){
+        endGame = true;
+        if (currentPlayer === "X"){
+            $('h1').html("Player X Wins");
+        } else {
+            $('h1').html("Player O Wins");
+        }
+        return endGame;
+    }
+}
+
+function checkVerticalWins(){
+    win(1, 4, 7);
+    win(2, 5, 8);
+    win(3, 6, 9);
+}
+
+function checkHorizontalWins(){
+    win(1, 2, 3);
+    win(4, 5, 6);
+    win(7, 8, 9);
+}
+
+function checkDiagonalWins(){
+    win(1, 5, 9);
+    win(3, 5, 7);
+}
+
 function checkGame() {
     numsOfTurn++;
     if (numsOfTurn === 9) {
@@ -13,10 +49,17 @@ function checkGame() {
 
 function performLogic(buttonId, tileId){
     let checking = checkGame();
+    let vWin = checkVerticalWins();
+    let hWin = checkHorizontalWins();
+    let dWin = checkDiagonalWins();
     if (checking === "gameEnd"){
         //stops game
-    } else {
-        $(buttonId).click(function(){
+    } else{
+        if (vWin === true || hWin === true || dWin === true) {
+        //stops game
+        console.log(stop);
+        } else{
+            console.log("changing");
             $(buttonId).hide();
             $(tileId).html(currentPlayer);
             if (currentPlayer === "X") {
@@ -24,9 +67,10 @@ function performLogic(buttonId, tileId){
             } else {
                 currentPlayer = "X";
             }
-        });
+        }
     }
 }
+
 $("#button1").click(function() {
     performLogic("#button1","#tile1");
 });
