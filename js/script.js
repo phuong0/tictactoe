@@ -42,16 +42,17 @@ function checkGame() {
     numsOfTurn++;
     if (numsOfTurn === 9) {
         endGame = true;
-        $('h1').html("It is a draw!!!!");
         return "gameEnd";
     }
 }
 
-function performLogic(buttonId, tileId){
+function performLogic(buttonId, tileId){ 
     let checking = checkGame();
-    if (checking === "gameEnd" || endGame === true){
-        //stops game
-    } else{  
+    if(checking === 'gameEnd'){
+        $('h1').html("It is a draw!!!!");
+    } else if (endGame === true){
+        numsofTurn = 0;
+    }else {
         console.log("changing");
         $(buttonId).hide();
         $(tileId).html(currentPlayer);
@@ -63,7 +64,6 @@ function performLogic(buttonId, tileId){
         } else {
             currentPlayer = "X";
         }
-        
     }
 }
 
